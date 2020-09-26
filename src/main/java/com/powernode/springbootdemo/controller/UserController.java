@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,11 +91,12 @@ public class UserController {
 
 
     @ApiOperation(value = "获取登陆者信息")
-    @PostMapping("/getUser")
+    @GetMapping("/getUser")
     public R getUser(HttpSession session){
         String nickname = (String)session.getAttribute("nickname");
         String headimgurl = (String)session.getAttribute("headimgurl");
-        Integer sex = (Integer)session.getAttribute("sex");
+        Object sex1 = session.getAttribute("sex");
+        Integer sex = (Integer)sex1;
 
         String userSex = "";
         if (sex == 1){
@@ -113,6 +115,9 @@ public class UserController {
 
         return R.ok().data(map).message(ResultEnum.SUCCESS);
     }
+
+
+
 
 
 }

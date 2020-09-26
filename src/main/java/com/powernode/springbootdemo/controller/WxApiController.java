@@ -2,16 +2,19 @@ package com.powernode.springbootdemo.controller;
 
 import com.google.gson.Gson;
 import com.powernode.springbootdemo.commonutils.ConstantWxUtils;
+import com.powernode.springbootdemo.commonutils.R;
 import com.powernode.springbootdemo.commonutils.ResultEnum;
 import com.powernode.springbootdemo.commonutils.YellowHaoException;
 import com.powernode.springbootdemo.commonutils.wx.ConstantPropertiesUtil;
 import com.powernode.springbootdemo.commonutils.wx.HttpClientUtils;
 import com.powernode.springbootdemo.entity.User;
 import com.powernode.springbootdemo.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -28,7 +31,7 @@ import java.util.HashMap;
  * @DAY_NAME_SHORT: 星期四
  * @VERSION: 1.0
  */
-
+@SuppressWarnings("all")
 @CrossOrigin
 @Controller//注意这里没有配置 @RestController
 @RequestMapping("/api/ucenter/wx")
@@ -136,7 +139,7 @@ public class WxApiController {
             HashMap userInfoMap = gson.fromJson(userInfo, HashMap.class);
             String nickname = (String)userInfoMap.get("nickname");//昵称
             String headimgurl = (String)userInfoMap.get("headimgurl");//头像
-            String sex = (String)userInfoMap.get("sex");//性别
+            Object sex = userInfoMap.get("sex");//性别
 
             /*System.out.println("nickname ===>" + nickname);
             System.out.println("headimgurl ===>" + headimgurl);
@@ -204,7 +207,12 @@ public class WxApiController {
             System.out.println("成功");
 
 
-            return "redirect:http://localhost:8150/html/success.html";
+            return "redirect:http://localhost:8150/test";
 
     }
+
+
+
+
+
 }
