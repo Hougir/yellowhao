@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,5 +87,33 @@ public class UserController {
         }
         return R.ok().message(ResultEnum.SUCCESS);
     }
+
+
+    @ApiOperation(value = "获取登陆者信息")
+    @PostMapping("/getUser")
+    public R getUser(HttpSession session){
+        String nickname = (String)session.getAttribute("nickname");
+        String headimgurl = (String)session.getAttribute("headimgurl");
+        Integer sex = (Integer)session.getAttribute("sex");
+
+        String userSex = "";
+        if (sex == 1){
+            userSex = "男";
+        }else if (sex == 1){
+            userSex = "女";
+        }else {
+            userSex = "泰";
+        }
+
+
+        Map map = new HashMap();
+        map.put("nickname",nickname);
+        map.put("headimgurl",headimgurl);
+        map.put("sex",userSex);
+
+        return R.ok().data(map).message(ResultEnum.SUCCESS);
+    }
+
+
 }
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <ttitle>登陆成功</ttitle>
+    <link href="/static/jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="/static/jquery/jquery-1.11.1-min.js"></script>
+    <script type="text/javascript" src="/static/jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url:"/user/getUser",
+                cache:false,
+                type:"json",
+                success:function (obj) {
+
+                    var item = obj.data;
+                    $("#name").text(item.nickname);
+                    $("#atc").prop('src',item.headimgurl);
+                    $("#sex").text(item.sex);
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+
+<div>
+    <h1>恭喜你通过考验</h1>
+</div>
+<div style="text-align: center">
+    <h3 id="name"></h3>&nbsp;<h3 id="sex"></h3>
+    <img id="atc" width="100px" height="100px">
+
+</div>
+</body>
+</html>

@@ -2,14 +2,12 @@ package com.powernode.springbootdemo.controller;
 
 import com.google.gson.Gson;
 import com.powernode.springbootdemo.commonutils.ConstantWxUtils;
-import com.powernode.springbootdemo.commonutils.JwtUtils;
 import com.powernode.springbootdemo.commonutils.ResultEnum;
 import com.powernode.springbootdemo.commonutils.YellowHaoException;
 import com.powernode.springbootdemo.commonutils.wx.ConstantPropertiesUtil;
 import com.powernode.springbootdemo.commonutils.wx.HttpClientUtils;
 import com.powernode.springbootdemo.entity.User;
 import com.powernode.springbootdemo.service.UserService;
-import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -82,7 +80,7 @@ public class WxApiController {
 
     //2 获取扫描人信息，添加数据
     @GetMapping("callback")
-    public String callback(String code, String state) {
+    public String callback(String code,HttpSession session,String state) {
 
             //1 获取code值，临时票据，类似于验证码
             //2 拿着code请求 微信固定的地址，得到两个值 accsess_token 和 openid
@@ -138,18 +136,24 @@ public class WxApiController {
             HashMap userInfoMap = gson.fromJson(userInfo, HashMap.class);
             String nickname = (String)userInfoMap.get("nickname");//昵称
             String headimgurl = (String)userInfoMap.get("headimgurl");//头像
+            String sex = (String)userInfoMap.get("sex");//性别
 
-            System.out.println("nickname ===>" + nickname);
+            /*System.out.println("nickname ===>" + nickname);
             System.out.println("headimgurl ===>" + headimgurl);
-            System.out.println("openid ===>" + openid);
+            System.out.println("openid ===>" + openid);*/
+
+            session.setAttribute("nickname",nickname);
+            session.setAttribute("headimgurl",headimgurl);
+            session.setAttribute("sex",sex);
 
 
-            User member = new User();
+
+            /*User member = new User();
             member = new User();
             member.setOpenid(openid);
             member.setNickname(nickname);
             member.setAvatar(headimgurl);
-            userService.save(member);
+            userService.save(member);*/
 
 
             //把扫描人信息添加数据库里面
@@ -200,7 +204,7 @@ public class WxApiController {
             System.out.println("成功");
 
 
-            return "";
+            return "redirect:http://localhost:8150/html/success.html";
 
     }
 }
