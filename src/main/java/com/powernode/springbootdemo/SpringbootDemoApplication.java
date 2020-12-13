@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.powernode"}) //swagger配置扫描包
-@MapperScan("com.powernode.springbootdemo.mapper")//配置自己的路径
+@MapperScan("com.powernode.springbootdemo")//配置自己的路径
 public class SpringbootDemoApplication {
 
     public static void main(String[] args) {

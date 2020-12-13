@@ -45,12 +45,17 @@ public class WxApiController {
 
         // 微信开放平台授权baseUrl
         String baseUrl = "https://open.weixin.qq.com/connect/qrconnect" +
-                "?appid=%s" +
+                "?self_redirect=%s" +
+                "&id=%s" +
+                "&appid=%s" +
                 "&redirect_uri=%s" +
                 "&response_type=code" +
                 "&scope=snsapi_login" +
                 "&state=%s" +
+                "&href=%s" +
                 "#wechat_redirect";
+        boolean self_redirect = true;
+        String id = "login_container";
 
         // 回调地址
         String redirectUrl = ConstantPropertiesUtil.WX_OPEN_REDIRECT_URL; //获取业务服务器重定向地址
@@ -70,12 +75,19 @@ public class WxApiController {
         //值：satte
         //过期时间：30分钟
 
+        System.out.println(redirectUrl);
+
+
+        String href = "data:text/css;base64,LmltcG93ZXJCb3ggLnFyY29kZSB7d2lkdGg6IDIwMHB4O30NCi5pbXBvd2VyQm94IC50aXRsZSB7ZGlzcGxheTogbm9uZTt9DQouaW1wb3dlckJveCAuaW5mbyB7d2lkdGg6IDIwMHB4O30NCi5zdGF0dXNfaWNvbiB7ZGlzcGxheTogbm9uZX0NCi5pbXBvd2VyQm94IC5zdGF0dXMge3RleHQtYWxpZ246IGNlbnRlcjt9";
         //生成qrcodeUrl
         String qrcodeUrl = String.format(
                 baseUrl,
+                self_redirect,
+                id,
                 ConstantPropertiesUtil.WX_OPEN_APP_ID,
                 redirectUrl,
-                state);
+                state,
+                href);
 
         return "redirect:" + qrcodeUrl;
     }
@@ -84,6 +96,9 @@ public class WxApiController {
     //2 获取扫描人信息，添加数据
     @GetMapping("callback")
     public String callback(String code,HttpSession session,String state) {
+
+
+        System.out.println("========callback======");
 
             //1 获取code值，临时票据，类似于验证码
             //2 拿着code请求 微信固定的地址，得到两个值 accsess_token 和 openid

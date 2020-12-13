@@ -96,12 +96,12 @@ public class UserController {
         String nickname = (String)session.getAttribute("nickname");
         String headimgurl = (String)session.getAttribute("headimgurl");
         Object sex1 = session.getAttribute("sex");
-        Integer sex = (Integer)sex1;
+
 
         String userSex = "";
-        if (sex == 1){
+        if (sex1.equals("1")){
             userSex = "男";
-        }else if (sex == 1){
+        }else if (sex1 == "2"){
             userSex = "女";
         }else {
             userSex = "泰";
